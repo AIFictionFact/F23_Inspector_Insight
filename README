@@ -1,0 +1,12 @@
+
+Description:
+
+A modern spin on the classic mafia game. You and your friends are each selected as members of a town, some criminals, some innocent. 
+Using prompts and questions guided by lead investigator “Inspector Insight” (AI) your goal is to keep your identity concealed, all while answering questions devised to uncover the “killer”. 
+If “inspector Insight” is able to correctly match your identity you lose. All players are given details that describe details of their story, such as location, alibis, and motives. 
+See here for more details on game play: Classic Roles - Mafia Game (wikidot.com)
+***
+The program would be able to navigate and store the information given/provided during the “night” and there would be a public data set (such as who is dead) that the AI would have access to in order to generate questions and make guesses. 
+Modification might need to be made to the rules and play structure of the game to accommodate a more ‘chat’ like structure. 
+
+
