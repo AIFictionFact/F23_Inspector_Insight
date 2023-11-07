@@ -30,7 +30,7 @@ Scalability: The system should accommodate varying numbers of players and game c
 Security: Ideally we’d find a way to ensure data privacy, especially if the game involves voice or text inputs from players.
 
 System Architecture:
-![diagram](Inspector Insight Diagram.png)
+![diagram](Diagram.png)
 Game Engine: Core engine managing game mechanics, events, and interactions.
 NLP Module: Interprets and responds to player text or voice inputs.
 ML Module: Controls the behavior of NPCs based on player actions and strategies.
@@ -74,7 +74,5 @@ Training Time: ML models may take time to adapt to player behavior.
 Language Recognition Accuracy: Accuracy in understanding player text or voice inputs may be a challenge.
 Resource Intensiveness: Running AI components in real-time might require substantial computing resources.
 
-
-![Diagram](Inspector Insight Diagram.png)
 
 
