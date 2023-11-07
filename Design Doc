@@ -1,0 +1,74 @@
+Name: Inspector Insight
+Members: Geo, Claudia
+
+Project overview:
+A modern spin on the classic mafia game. You and your friends are each selected as members of a town, some criminals, some innocent. Using prompts and questions guided by lead investigator “Inspector Insight” (AI) your goal is to keep your identity concealed, all while answering questions devised to uncover the “killer”. If “inspector Insight” is able to correctly match your identity you lose. All players are given details that describe details of their story, such as location, alibis, and motives. See here for more details on game play: Classic Roles - Mafia Game (wikidot.com)
+***The program would be able to navigate and store the information given/provided during the “night” and there would be a public data set (such as who is dead) that the AI would have access to in order to generate questions and make guesses. Modification might need to be made to the rules and play structure of the game to accommodate a more ‘chat’ like structure. 
+
+Related AI:
+
+Natural Language Processing (NLP): To analyze and understand player interactions, conversations, and voting patterns.
+Machine Learning (ML): To dynamically adjust the behavior of non-player characters (NPCs) based on player choices and strategies.
+Computer Vision: If the game involves any visual elements, such as facial expressions or gestures during player interactions.
+Reinforcement Learning: For training AI-controlled characters to adapt and optimize their strategies over time.
+Data Analytics: To analyze game statistics, player behavior, and trends to improve the overall game experience.
+
+Functional Requirements:
+
+Automated Game Master: An AI system that can act as the game master, manage game events, and dynamically adjust the narrative based on player decisions.
+Potential Intelligent NPCs: Non-player characters with evolving behaviors, influenced by machine learning algorithms and player interactions.
+Natural Language Understanding: Ability to interpret and respond to player text or voice inputs during discussions, investigations, and voting phases. Most likely text. 
+Dynamic Game Environment: The ability to generate and adapt the game's narrative and events based on player actions and choices.
+Player Behavior Analysis: Utilize machine learning to analyze player strategies, alliances, and voting patterns to enhance the overall gaming experience.
+
+Non-functional Requirements:
+
+Performance: The AI system should respond in real-time during player interactions without noticeable delays.
+Usability: The interface should be intuitive, allowing players to easily understand and engage with the AI-driven elements.
+Reliability: The AI should provide consistent and fair experiences, avoiding biased decisions or favoritism.
+Scalability: The system should accommodate varying numbers of players and game complexities.
+Security: Ideally we’d find a way to ensure data privacy, especially if the game involves voice or text inputs from players.
+
+System Architecture:
+Game Engine: Core engine managing game mechanics, events, and interactions.
+NLP Module: Interprets and responds to player text or voice inputs.
+ML Module: Controls the behavior of NPCs based on player actions and strategies.
+Database: Stores player profiles, game state, and historical data.
+APIs: Integration with external services for analytics and potential external AI modules.
+
+Potential Technologies to be Used:
+Programming Languages: Python, JavaScript
+Frameworks: TensorFlow, PyTorch, Flask (for web interactions)
+Libraries: spaCy (NLP), scikit-learn (ML), Unity (game engine)
+
+User Profiles:
+
+Players: Individuals participating in the AI-hosted Mafia game.
+Game Masters: Potential option to have someone moderating the game - they would work alongside Inspector Insight to customize the game
+Developers: Team members responsible for maintaining and updating the AI system.
+
+
+UI/UX Design:
+Player Interface: A user-friendly interface for participating in discussions, investigations, and voting.
+Game Master Tools: An interface for the Game Master to control and influence the game.
+
+Team Roles and Responsibilities:
+
+Divided between us:
+Claudia:
+Project Manager: Oversees the entire project, ensures timelines are met.
+Game Developer: Works on the integration of AI components with the game engine.
+UI Designer: Designs interfaces for players and Game Masters.
+
+Geo:
+AI Developer: Implements NLP and ML components.
+Data Analyst: Analyzes player behavior and provides insights for improvement.
+UX Designer: Plans features for players and Game Masters.
+
+
+
+Technical Limitations:
+Data Privacy: The system should handle player data securely. 
+Training Time: ML models may take time to adapt to player behavior.
+Language Recognition Accuracy: Accuracy in understanding player text or voice inputs may be a challenge.
+Resource Intensiveness: Running AI components in real-time might require substantial computing resources.
