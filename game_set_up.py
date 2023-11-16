@@ -9,7 +9,6 @@ class game():
         self._dead = []
         #game begins at night
         self._night = True
-        self._day = not(self._night)
         self._day_num = 1
 
     def add_player(self, ID):
@@ -37,15 +36,19 @@ class game():
 
 
     #takes in votes from all of the players and counts the ballots to see who is voted off
-    def count_ballots(self, player1, player2, player3, player4, player5, player6, player7):
-        ballot = [player1, player2, player3, player4, player5, player6, player7]
+    def count_ballots(self, ballot):
         votes = {}
         for x in range(0, 7):
             if ballot[x] not in votes:
                 votes[ballot[x]]=1
             else:
                 votes[ballot[x]]+=1
-        return max(votes.values())
+        for x in votes:
+            if votes[x] == max(votes.values()):
+                killed = x
+
+                
+        return killed
 
     def is_night(self):
         return self._night
@@ -112,6 +115,8 @@ def run_game(num_players, name_list):
 
         #add players to game
         g__.add_player(p)
+
+
 
 
 
