@@ -1,6 +1,7 @@
 
 from train import AI_Bot
-import Preface
+import Preface as P
+import random
 import os
 
 
@@ -16,13 +17,13 @@ def run_game(num_players, name_list):
         return 'ERROR: PLEASE INCLUDE ALL PLAYER NAMES ONLY'
     
     #inicialize game and players
-    g__ = game()
+    g__ = P.game()
     roles = ['MAFIA_1', 'VILLAGER_1', 'VILLAGER_2', 'VILLAGER_3', 'MAFIA_2', 'DOCTOR']
     
     for x in range(0, num_players):
         #pick random roles for each player
         i  = random.choice(roles)
-        p = Player(i, name_list[x])
+        p = P.Player(i, name_list[x])
         roles.remove(i)
 
         #add players to game
