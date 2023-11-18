@@ -1,5 +1,6 @@
 
 import random
+from train import AI_Bot
 
 global g__
 
@@ -63,7 +64,7 @@ class game():
 class Player():
     def __init__(self, role, name):
         self._role = role
-        self._name = name
+        self.name = name
         self._alive = True
         self._doctor = False
         self._mafioso = False
@@ -85,36 +86,25 @@ class Player():
         return self._doctor
 
 
-#Holds previous AI knowledge and interations
-class narrator():
-    def __init__(self):
-        self._messages = []
-
-    def share_knowledge(self, message):
-        self._messages.append(message)
 
 
 
-#run game play
-def run_game(num_players, name_list):
-    #Potential Errors
-    if num_players > 6:
-        return 'ERROR: TOO MANY PLAYERS'
-    if num_players != len(name_list):
-        return 'ERROR: PLEASE INCLUDE ALL PLAYER NAMES ONLY'
+
+
+
+
+
+
+
     
-    #inicialize game and players
-    g__ = game()
-    roles = ['MAFIA_1', 'VILLAGER_1', 'VILLAGER_2', 'VILLAGER_3', 'MAFIA_2', 'DOCTOR']
     
-    for x in range(0, num_players):
-        #pick random roles for each player
-        i  = random.choice(roles)
-        p = Player(i, name_list[x])
-        roles.remove(i)
+    
 
-        #add players to game
-        g__.add_player(p)
+        
+    
+
+
+
 
 
 
