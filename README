@@ -10,12 +10,12 @@ Related AI:
 Natural Language Processing (NLP): To analyze and understand player interactions, conversations, and voting patterns.
 Machine Learning (ML): To dynamically adjust the behavior of non-player characters (NPCs) based on player choices and strategies.
 Computer Vision: If the game involves any visual elements, such as facial expressions or gestures during player interactions.
-Reinforcement Learning: For training AI-controlled characters to adapt and optimize their strategies over time.
-Data Analytics: To analyze game statistics, player behavior, and trends to improve the overall game experience.
+
 
 Functional Requirements:
 
-Automated Game Master: An AI system that can act as the game master, manage game events, and dynamically adjust the narrative based on player decisions.
+Game Master: A hard-coded game master, manage game events, and dynamically adjust the narrative based on player decisions.
+
 Potential Intelligent NPCs: Non-player characters with evolving behaviors, influenced by machine learning algorithms and player interactions.
 Natural Language Understanding: Ability to interpret and respond to player text or voice inputs during discussions, investigations, and voting phases. Most likely text. 
 Dynamic Game Environment: The ability to generate and adapt the game's narrative and events based on player actions and choices.
