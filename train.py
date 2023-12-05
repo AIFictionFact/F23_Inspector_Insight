@@ -3,10 +3,14 @@
 from Preface import Player
 import openai
 
-OPENAI_API_KEY = 'secret_key'
+file = open('password.txt', 'r')
+password = file.readline()
 
 
-openai.api_key = OPENAI_API_KEY
+OPENAI_API_KEY = password
+
+
+openai.api_key = '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'
 
 #Holds previous AI knowledge and interations
 #create a child class of player for bots
