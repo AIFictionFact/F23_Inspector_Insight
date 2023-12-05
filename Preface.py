@@ -18,6 +18,13 @@ class game():
         else:
             self._players[ID.name] = ID
 
+    def return_players(self):
+        p = self._players.keys()
+        names = ''
+        for i in p:
+            names = names +' '+ i
+        return names
+
     def kill_off(self, name): #kill a player and remove them from active list
         if name in self._dead:
             return 'ERROR: PLAYER ALREADY DEAD'
@@ -26,6 +33,7 @@ class game():
             #kill the player and append them to the dead player list
             dead.died()
             self._dead[name] = dead
+            return 'DONE'
 
     def disclose_mafia(self):
         # disclose to both mafia people that eachother exsist returns, a list of mafia player objects
@@ -33,8 +41,18 @@ class game():
         for x in self._players.keys():
             if not(self._players[x].is_innocent()):
                 mafia.append(self._players[x].name)
+        for x in self._dead.keys():
+            if not(self._dead[x].is_innocent()):
+                mafia.append(self._dead[x].name)
+
         return mafia
-    
+    def get_doctor(self):
+        doc = ''
+        for x in self._players.keys():
+            if self._players[x].is_doctor():
+                doc = self._players[x]
+        return doc
+
     def last_killed(self):
         if len(self._dead) == 0:
             return "NOBODY DIED"
@@ -43,11 +61,29 @@ class game():
             self._dead[name] = ID
             return name
 
+    def get_player(self, name):
+        player = self._players.pop(name)
+        self._players[name]=player
+        #Find player and return them as object
+        return player
+    
+    def is_dead(self, name):
+        if name in self._dead:
+            return True
+        return False
+    
+    def is_bot(self, name):
+        if not self.is_dead(name):
+            player = self._players[name]
+        else:
+            player = self._dead[name]
+        return player.is_bot()
+
 
     #takes in votes from all of the players and counts the ballots to see who is voted off
     def count_ballots(self, ballot):
         votes = {}
-        for x in range(0, 7):
+        for x in range(0, len(ballot)):
             if ballot[x] not in votes:
                 votes[ballot[x]]=1
             else:
@@ -55,8 +91,7 @@ class game():
         for x in votes:
             if votes[x] == max(votes.values()):
                 killed = x
-
-                
+    
         return killed
 
     def is_night(self):
@@ -64,6 +99,10 @@ class game():
     
     def what_day_is_it(self):
         return self._day_num
+    
+    def next_day(self):
+        self._day_num = self._day_num + 1
+
 
 
 #------------------------------------------------------------------------------------------------
@@ -96,6 +135,10 @@ class Player():
     
     def is_bot(self):
         return self._bot
+    
+
+
+
 
 
 

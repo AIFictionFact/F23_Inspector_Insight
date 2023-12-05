@@ -3,7 +3,7 @@
 from Preface import Player
 import openai
 
-OPENAI_API_KEY = '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'
+OPENAI_API_KEY = 'secret_key'
 
 
 openai.api_key = OPENAI_API_KEY
