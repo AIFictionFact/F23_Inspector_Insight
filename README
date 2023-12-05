@@ -14,11 +14,11 @@ Add openAI key*:
 **Please Ensure that all files are in the same directory. 
 
 
-You can now run the game... If you would like to hardcode player names, you can do so in main.py.
+You can now run the game (run main.py)... If you would like to hardcode player names, you can do so in main.py.
 
 
 
-Information about Classes & Functions in Preface.py:
+Information about Classes & Functions:
 
 OBJECT - Game:
         Contains:
@@ -48,16 +48,21 @@ OBJECT - Player (takes in role, name):
             -is_doctor(self)      | returns boolean if player is doctor
 
 
-OBJECT - Narrator:
+OBJECT - AI_Bot -- CHILD OF PLAYER CLASS:
         Contains:
             -Message List
+            -Context (system context and game rules)
         Functions:
-            -share_knowledge (takes in string) | VOID - appends to list of messages
+            -get_response (takes in string) | reurns an AI response and appends to list of messages
+            -get_vote (takes in string) | reurns an AI response 
+            -check_token | VOID checks the current token size and summerizes as needed
 
-FUNCTION - Inicializes_game:
+FUNCTION - Inicialize_game:
         -Takes in int number of players, and list of player names
         -Returns error string if invalid
         -Inicializes player objects, randomizes role assignments, and creates game object incuding all players
+
+FUNCTION - 
 
 
 
