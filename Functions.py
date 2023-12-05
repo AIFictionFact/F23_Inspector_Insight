@@ -124,7 +124,9 @@ def run_game(game, inspector):
     game_on = True
     while(game_on):
         print(f'''\n\n-------------------------------------------NIGHT TIME---------------------------------------------------\n\n''')
+        print(f'''\n\n-------------------------------------------MAFIA---------------------------------------------------\n\n''')
         killed = wake_mafia(game)
+        print(f'''\n\n-------------------------------------------DOCTOR---------------------------------------------------\n\n''')
         saved = wake_doctor(game)
         if killed != saved:            
             fill_in_cop(game, inspector, killed)
