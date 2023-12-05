@@ -30,7 +30,7 @@ OBJECT - Game:
             -add_player (takes in Player Object) | VOID - adds player to list
             -kill_off (takes in Player Object)   | VOID - removes from player list, moves to dead player list
             -disclose_mafia (self)               | returns list of mafia players
-            -count_ballots(list of votes[6])     | returns player object that is voted off
+            -count_ballots(list of votes)     | returns player object that is voted off
             -is_night (self)                     | returns if its night boolean
             -what_day_it_is (VOID)               | returns what day number it is
 
@@ -62,7 +62,37 @@ FUNCTION - Inicialize_game:
         -Returns error string if invalid
         -Inicializes player objects, randomizes role assignments, and creates game object incuding all players
 
-FUNCTION - 
+FUNCTION - wake_mafia:
+        -Takes in a game object
+        -runs the mafia game play section
+        -creates confidential disscussion between mafia players
+
+FUNCTION - wake_doctor:
+        -Takes in a game object
+        -runs the doctor game play section
+        -allows single player to vote who to save
+
+FUNCTION - fill_in_cop:
+        -Takes in a game object and inspector object
+        -appends the private cop information to the inspector object
+
+FUNCTION - run_game:
+        -Takes in a game object and Inspector object
+        -controls the main loop
+        -calls actions based on player inputs
+        -checks for end of game situations
+
+FUNCTION - is_mafia_dead:
+        -Takes in a game object
+        -checks the status of mafia players
+        -returns if TRUE if both players are dead
+
+FUNCTION - voting_process:
+        -Takes in a game object and inspector object
+        -runs the voting sequence
+        -calls to count ballots and kills off the voted off player
+
+
 
 
 
