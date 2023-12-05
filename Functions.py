@@ -4,6 +4,7 @@ from train import *
 import random
 import names
 import Preface as P
+import string
 
 def wake_mafia(game):
     #conversation prior to voting
@@ -44,9 +45,13 @@ def wake_mafia(game):
                 answer = input(f'{turn.name}: ')
                 out = f"""{turn.name}: {answer}\n"""
                 record = record + mod + out
+           
+            i = answer.find('AGREE ')
             
-            if answer[0:5]=='AGREE':
-                eliminate = answer[6:]
+            if i != -1:
+                eliminate = answer[i+6:]
+                new_string = eliminate.translate(str.maketrans('', '', string.punctuation))
+                eliminate = new_string
                 talkative = False
             else:
                 turn = game.get_player(mafia2)
@@ -85,8 +90,15 @@ def wake_doctor(game):
     print(mod)
     if game.is_bot(turn.name):
             record = record + mod
-            answer = turn.get_response((record))
-            response = f'{turn.name}: ' + answer + '\n'
+            out = turn.get_response((record))
+            #becuase AI cant follow directions we have to scan for the player names :/
+            p = game.return_players()
+            answer = ''
+            for i in p:
+                num = out.find(i)
+                if num != -1:
+                    answer = out[num:len(i)]
+            response = f'{turn.name}: ' + out + '\n'
             record = record + response
             print(response)
     else:
@@ -94,7 +106,8 @@ def wake_doctor(game):
         out = f"""{turn.name}: {answer}\n"""
         record = record + mod + out
 
-    save = answer
+    new_string = answer.translate(str.maketrans('', '', string.punctuation))
+    save = new_string
     return save
 
 
@@ -110,19 +123,28 @@ def fill_in_cop(game, inspector, killed):
 def run_game(game, inspector):
     game_on = True
     while(game_on):
+        print(f'''\n\n-------------------------------------------NIGHT TIME---------------------------------------------------\n\n''')
         killed = wake_mafia(game)
         saved = wake_doctor(game)
         if killed != saved:            
             fill_in_cop(game, inspector, killed)
             game.kill_off(killed)
 
-        print(f'''\n----------------------------------------------------------------------------------------------\n''')
+        print(f'''\n\n-------------------------------------------DAY TIME---------------------------------------------------\n\n''')
 
         run_day(game, inspector)
         #villagers vote for who to kill off
 
-        voted_off = voting_process(game, inspector)
+        print(f'''\n\n-------------------------------------------VOTING TIME---------------------------------------------------\n\n''')
 
+        voted_off = voting_process(game, inspector)
+        if voted_off != '':
+            print(f'''{voted_off} has been voted off...''')
+            fill_in_cop(game, inspector, voted_off)
+        else:
+            print('Votes were tied. Nobody Eliminated')
+
+        
         #check to see if mafia are still alive
         if is_mafia_dead(game):
             message =  f"""Moderator: All mafia have been killed. GAME OVER.\n"""
@@ -196,12 +218,22 @@ def voting_process(game, inspector):
     for x in game._players:
         turn = game._players[x]
         record = ''
-        mod = f"""Moderator: {turn.name} it is your turn to vote for who you think is part of the mafia. Please only respond with the name of the player you think is guilty. The players remaining are: {game.return_players()}\n"""
+        mod = f"""Moderator: {turn.name} it is your turn to vote for who you think is part of the mafia. YOUR ANSWER SHOULD BE JUST THE NAME OF THE PLAYER YOU ARE VOTING FOR. (EX: 'Fred'). You must vote every round. The players remaining are: {game.return_players()}\n"""
         print(mod)
         if turn.is_bot():
             record = record + mod
             answer = turn.get_response(record)
-            ballots.append(answer)
+            #becuase AI cant follow directions we have to scan for the player names :/
+            p = game.return_players()
+            out = ''
+            for i in p:
+                num = answer.find(i)
+                if num != -1:
+                    out = answer[num:len(i)]
+                else:
+                    continue
+            print(out)
+            ballots.append(out)
             answer = f'{turn.name}: ' + answer + '\n'
             print(answer)
         else:
