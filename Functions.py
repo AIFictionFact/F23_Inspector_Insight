@@ -49,18 +49,28 @@ def wake_mafia(game):
             i = answer.find('AGREE ')
             
             if i != -1:
-                eliminate = answer[i+6:]
-                new_string = eliminate.translate(str.maketrans('', '', string.punctuation))
-                eliminate = new_string
+                eliminate = answer[i:]
+                #becuase AI cant follow directions we have to scan for the player names :/
+                p = game._players
+                out = ''
+                for i in p:
+                    num = eliminate.find(i)
+                    if num != -1 and i!=turn.name:
+                        out = i
+                eliminate = out
                 talkative = False
             else:
-                turn = game.get_player(mafia2)
+                if turn.name == mafia1:
+                    turn = game.get_player(mafia2)
+                else:
+                    turn = game.get_player(mafia1)
+                
 
     else:
         if mafia1 == 'DEAD':
             turn = game.get_player(mafia2)
         elif mafia2 == 'DEAD':
-            turn = game.get_palyer(mafia1)
+            turn = game.get_player(mafia1)
         record = ''
         mod = f"""Moderator: {turn.name} it is your turn to speak. You are the only remianing member of the Mafia. Please only respond with the name of the player you would like to eliminate.\n"""
         print(mod)
@@ -70,10 +80,18 @@ def wake_mafia(game):
                 response = f'{turn.name}: ' + answer + '\n'
                 record = record + response
                 print(response)
+
+                #becuase AI cant follow directions we have to scan for the player names :/
+                p = game._players
+                for i in p:
+                    num = answer.find(i)
+                    if num != -1 and i!=turn.name:
+                        answer = i       
         else:
             answer = input(f'{turn.name}: ')
             out = f"""{turn.name}: {answer}\n"""
             record = record + mod + out
+            
 
         eliminate = answer
     return eliminate
@@ -85,19 +103,21 @@ def wake_doctor(game):
     title = f"""Night: {game.what_day_is_it()}\nAll members EXCEPT the Doctor please close your eyes now.\n"""
     print(title)
     turn = game.get_doctor()
+    if turn == '':
+        return ''
     record = ''
     mod = f"""Moderator: {turn.name} it is your turn to speak. As the Doctor you get to choose one player to save tonight. Please only respond with the name of the player you would like to save.The players remaining are: {game.return_players()}\n"""
     print(mod)
     if game.is_bot(turn.name):
+            answer = ''
             record = record + mod
             out = turn.get_response((record))
             #becuase AI cant follow directions we have to scan for the player names :/
-            p = game.return_players()
-            answer = ''
+            p = game._players
             for i in p:
                 num = out.find(i)
                 if num != -1:
-                    answer = out[num:len(i)]
+                    answer = i
             response = f'{turn.name}: ' + out + '\n'
             record = record + response
             print(response)
@@ -111,13 +131,12 @@ def wake_doctor(game):
     return save
 
 
-def fill_in_cop(game, inspector, killed):
-    dead = game.get_player(killed)
+def fill_in_cop(game, inspector, dead):
     jury = dead.is_innocent()
     if jury:
-        message =  f"""Moderator: {killed} has been killed tonight. This person was inncoent. Remember that as the Cop only you are aware of this information.\n"""
+        message =  f"""Moderator: {dead.name} has been killed tonight. This person was inncoent. Remember that as the Cop only you are aware of this information.\n"""
     else:
-        message =  f"""Moderator: {killed} has been killed tonight. This person was part of the Mafia. Remember that as the Cop only you are aware of this information.\n"""
+        message =  f"""Moderator: {dead.name} has been killed tonight. This person was part of the Mafia. Remember that as the Cop only you are aware of this information.\n"""
     inspector._messages.append({'role': 'user', 'content': message})
 
 def run_game(game, inspector):
@@ -128,9 +147,11 @@ def run_game(game, inspector):
         killed = wake_mafia(game)
         print(f'''\n\n-------------------------------------------DOCTOR---------------------------------------------------\n\n''')
         saved = wake_doctor(game)
-        if killed != saved:            
-            fill_in_cop(game, inspector, killed)
+        if killed != saved:  
+            dead = game.get_player(killed)     
             game.kill_off(killed)
+            fill_in_cop(game, inspector, dead)
+            
 
         print(f'''\n\n-------------------------------------------DAY TIME---------------------------------------------------\n\n''')
 
@@ -142,7 +163,10 @@ def run_game(game, inspector):
         voted_off = voting_process(game, inspector)
         if voted_off != '':
             print(f'''{voted_off} has been voted off...''')
-            fill_in_cop(game, inspector, voted_off)
+            dead = game.get_player(voted_off)     
+            game.kill_off(voted_off)
+            fill_in_cop(game, inspector, dead)
+            #fill_in_cop(game, inspector, voted_off)
         else:
             print('Votes were tied. Nobody Eliminated')
 
@@ -226,17 +250,15 @@ def voting_process(game, inspector):
             record = record + mod
             answer = turn.get_response(record)
             #becuase AI cant follow directions we have to scan for the player names :/
-            p = game.return_players()
+            p = game._players
             out = ''
             for i in p:
                 num = answer.find(i)
-                if num != -1:
-                    out = answer[num:len(i)]
-                else:
-                    continue
-            print(out)
+                if num != -1 and i!=turn.name:
+                    out = i
+   
             ballots.append(out)
-            answer = f'{turn.name}: ' + answer + '\n'
+            answer = answer + '\n'
             print(answer)
         else:
             comment = input(f'{turn.name}: ')
@@ -277,7 +299,7 @@ def run_day(game, inspector):  #get commentary from night before
         if turn.is_bot():
             record = record + mod
             answer = turn.get_response(record)
-            answer = f'{turn.name}: ' + answer + '\n'
+            answer = answer + '\n'
             print(answer)
         else:
             comment = input(f'{turn.name}: ')

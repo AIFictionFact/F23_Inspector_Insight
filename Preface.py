@@ -27,6 +27,7 @@ class game():
 
     def kill_off(self, name): #kill a player and remove them from active list
         if name in self._dead:
+            assert 'ERROR: PLAYER ALREADY DEAD'
             return 'ERROR: PLAYER ALREADY DEAD'
         else:
             dead = self._players.pop(name)
@@ -83,6 +84,7 @@ class game():
     #takes in votes from all of the players and counts the ballots to see who is voted off
     def count_ballots(self, ballot):
         votes = {}
+        killed = ''
         for x in range(0, len(ballot)):
             if ballot[x] not in votes:
                 votes[ballot[x]]=1
@@ -90,6 +92,9 @@ class game():
                 votes[ballot[x]]+=1
         for x in votes:
             if votes[x] == max(votes.values()):
+                if killed != '':
+                    #means there is a tie
+                    return ''
                 killed = x
     
         return killed

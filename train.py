@@ -77,7 +77,7 @@ class AI_Bot(Player):
     def check_tokens(self):
         token_size = 0
         #some prep in case we need to shorten
-        tmp_messages = [{"role": "system", "content": "You are an assistant, used to summarize text so that they remain under the max token size for a gpt model which is 4000 tokens. Summarize given text while maintaining clearity and understanding. Try to make it as short as possible, without risking ruining the context."}]
+        tmp_messages = [{"role": "system", "content": "You are an assistant, used to summarize text so that they remain under the max token size for a gpt model which is 2000 tokens. Summarize given text while maintaining clearity and understanding. Try to make it as short as possible, without risking ruining the context, remember to remian under 2000 tokens."}]
         big_chunk = 'Summerize the following Message: '
 
         for i in range(1, len(self._messages)):
@@ -95,7 +95,7 @@ class AI_Bot(Player):
             tmp_messages.append({"role":"user", "content": big_chunk})
             #we can send a query to another instance of a gpt model with a diffrent system context to shorten it
             #we then use this response and return it as our new message
-            tmp_response = openai.ChatCompletion.create(model='gpt-3.5-turbo', messages = tmp_messages, temperature = 0.5, max_tokens = 4000)
+            tmp_response = openai.ChatCompletion.create(model='gpt-3.5-turbo', messages = tmp_messages, temperature = 0.5, max_tokens = 2000)
             new_system = tmp_response.choices[0].message.content
 
             #re_write our inspector system
